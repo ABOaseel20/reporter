@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بطاقات تهنئة باليوم الوطني</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            scroll-behavior: smooth;
+            direction: rtl;
+        }
+        
+        .container {
+            background-image: url("back.jpg");
+            padding: 20px;
+            text-align: center;
+            width: 50%;
+            margin-top: 10%;
+        }
+        
+        .container .gr {
+            font-size: 24px;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        img {
+            width: 200px;
+            height: 200px;
+            padding: 15px;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        input[type="text"],
+        select {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            background-color: #218838;
+        }
+        
+        .card {
+            margin-top: 20px;
+            padding: 80px;
+            border-radius: 10px;
+            background-color: #006c35;
+            color: white;
+            text-align: center;
+            display: none;
+            position: relative;
+        }
+        
+        .card.portrait {
+            width: 300px;
+            height: 350px;
+            right: 15%;
+        }
+        
+        .card.landscape {
+            width: 300px;
+            height: 150px;
+            right: 15%;
+        }
+        
+        .card h2 {
+            margin: 24px 0;
+            font-size: 32px;
+        }
+        
+        .card p {
+            font-size: 24px;
+            position: relative;
+            top: 12%;
+        }
+        
+        .flag {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            width: 20%;
+        }
+        
+        @media(max-width:1023px) {
+            .container {
+                width: 100%;
+            }
+            .card.card.landscape {
+                width: 100%;
+                height: 150px;
+                padding: 10%;
+                position: relative;
+                right: 20%;
+            }
+            .card.portrait {
+                width: 80%;
+                position: relative;
+                right: 10%;
+            }
+            .card {
+                padding: 10%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+    </header>
+    <div class="container">
+        <img src="radio.jpg" alt="">
+        <p class="gr">"تهديكم إذاعة الرياض خدمة إصدار بطاقة التهنئة الخاصة بكم بمناسبة اليوم الوطني تحت شعار "نحلم ونحقق</p>
+
+
+        <!-- إدخال الاسم -->
+        <input type="text" id="name" placeholder="أدخل اسمك">
+
+        <!-- اختيار نوع البطاقة -->
+        <label for="orientation">اختيار نوع البطاقة:</label>
+        <select id="orientation">
+            <option value="portrait">طولي</option>
+            <option value="landscape">عرضي</option>
+        </select>
+
+        <!-- زر إنشاء البطاقة -->
+        <button onclick="generateCard()">إنشاء البطاقة</button>
+
+        <!-- البطاقة -->
+        <div id="card" class="card">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0d/Flag_of_Saudi_Arabia.svg" alt="علم السعودية" class="flag">
+            <h2 id="card-name"></h2>
+            <p>كل عام وأنتم بخير بمناسبة اليوم الوطني!</p>
+        </div>
+
+        <!-- زر تحميل البطاقة -->
+        <button id="downloadBtn" style="display:none;" onclick="downloadCard()">تحميل البطاقة</button>
+    </div>
+
+    <!-- كانفاس لرسم البطاقة كصورة -->
+    <canvas id="canvas" style="display:none;"></canvas>
+
+    <script>
+        function generateCard() {
+            const name = document.getElementById('name').value;
+            const orientation = document.getElementById('orientation').value;
+            const card = document.getElementById('card');
+            const cardName = document.getElementById('card-name');
+            const downloadBtn = document.getElementById('downloadBtn');
+
+            if (!name) {
+                alert('يرجى إدخال الاسم');
+                return;
+            }
+
+            // ضبط اسم البطاقة
+            cardName.textContent = 'تهنئة لـ ' + name;
+
+            // تطبيق فئة الطولي أو العرضي بناءً على الاختيار
+            if (orientation === 'portrait') {
+                card.className = 'card portrait';
+            } else {
+                card.className = 'card landscape';
+            }
+
+            // عرض البطاقة وزر التحميل
+            card.style.display = 'block';
+            downloadBtn.style.display = 'inline-block';
+        }
+
+        function downloadCard() {
+            const card = document.getElementById('card');
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+            const orientation = document.getElementById('orientation').value;
+
+            // ضبط أبعاد الكانفاس حسب نوع البطاقة
+            if (orientation === 'portrait') {
+                canvas.width = 300;
+                canvas.height = 500;
+            } else {
+                canvas.width = 500;
+                canvas.height = 300;
+            }
+
+            // رسم الخلفية
+            ctx.fillStyle = '#006c35';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // إضافة النصوص
+            ctx.fillStyle = 'white';
+            ctx.textAlign = 'center';
+            ctx.font = '32px Arial';
+            const name = document.getElementById('name').value;
+            ctx.fillText('تهنئة لـ ' + name, canvas.width / 2, canvas.height / 2 - 20);
+            ctx.font = '24px Arial';
+            ctx.fillText('كل عام وأنتم بخير بمناسبة اليوم الوطني!', canvas.width / 2, canvas.height / 2 + 20);
+
+            // تحميل البطاقة
+            const link = document.createElement('a');
+            link.download = 'national_day_card.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+    </script>
+</body>
+
+</html>

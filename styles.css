@@ -1,0 +1,197 @@
+/* إعدادات أساسية */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial, sans-serif';
+}
+
+body {
+    line-height: 1.6;
+    direction: rtl;
+}
+
+
+/* ترويسة */
+
+header {
+    background: #007bff;
+    color: #fff;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+header .logo {
+    font-size: 1.5em;
+}
+
+header .nav-links {
+    list-style: none;
+    display: flex;
+}
+
+header .nav-links li {
+    margin-left: 20px;
+}
+
+header .nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+
+/* قسم البطل */
+
+.hero {
+    background: url('../img/example-sheep.jpg') no-repeat center center/cover;
+    height: 400px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero .container {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+}
+
+.hero h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    font-size: 1.2em;
+}
+
+.hero .btn {
+    display: inline-block;
+    background: #ff9900;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.hero .btn:hover {
+    background: #e68a00;
+}
+
+
+/* قائمة الأغنام */
+
+.sheep-list .container {
+    display: flex;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+    flex-wrap: wrap;
+}
+
+.sheep-list h2 {
+    text-align: center;
+    margin: 10px;
+    font-size: 2em;
+}
+
+.sheep-item {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+    margin: 10px;
+}
+
+.sheep-item img {
+    width: 20%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.sheep-item h3 {
+    margin-top: 10px;
+    font-size: 1.5em;
+}
+
+
+/* تذييل */
+
+footer {
+    background: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+}
+
+footer .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+/* تصميم متجاوب */
+
+@media (max-width: 768px) {
+    header .container {
+        flex-direction: column;
+    }
+    header .nav-links {
+        flex-direction: column;
+        margin-top: 10px;
+    }
+    header .nav-links li {
+        margin-left: 0;
+        margin-bottom: 10px;
+    }
+    .hero {
+        height: auto;
+        padding: 20px 0;
+    }
+    .sheep-item {
+        margin-bottom: 20px;
+    }
+}
+
+
+/* تأثيرات بصرية */
+
+.sheep-item {
+    position: relative;
+    overflow: hidden;
+}
+
+
+/* إضافة ظل للصندوق */
+
+.sheep-item {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sheep-item:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+
+/* زر متحرك */
+
+.hero .btn {
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.hero .btn:hover {
+    transform: translateY(-3px);
+}
